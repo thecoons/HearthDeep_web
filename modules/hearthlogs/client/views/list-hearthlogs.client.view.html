@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Hearthlogs</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="hearthlog in vm.hearthlogs"
+       ui-sref="hearthlogs.view({ hearthlogId: hearthlog._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="hearthlog.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="hearthlog.user" ng-bind="hearthlog.user.displayName"></span>
+        <span ng-if="!hearthlog.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="hearthlog.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.hearthlogs.$resolved && !vm.hearthlogs.length">
+    No Hearthlogs yet, why don't you <a ui-sref="hearthlogs.create">create one</a>?
+  </div>
+</section>

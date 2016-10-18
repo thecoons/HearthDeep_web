@@ -25,7 +25,9 @@ var _ = require('lodash'),
   webdriver_update = require('gulp-protractor').webdriver_update,
   webdriver_standalone = require('gulp-protractor').webdriver_standalone,
   del = require('del'),
-  KarmaServer = require('karma').Server;
+  KarmaServer = require('karma').Server,
+  coffee = require('gulp-coffee'),
+  gutil = require('gutil');
 
 // Local settings
 var changedTestFiles = [];
@@ -77,6 +79,7 @@ gulp.task('watch', function () {
   gulp.watch(defaultAssets.client.css, ['csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.sass, ['sass', 'csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.less, ['less', 'csslint']).on('change', plugins.refresh.changed);
+  gulp.watch(defaultAssets.client.coffee, ['coffee']).on('change', plugins.refresh.changed);
 
   if (process.env.NODE_ENV === 'production') {
     gulp.watch(defaultAssets.server.gulpConfig, ['templatecache', 'eslint']);
@@ -110,6 +113,13 @@ gulp.task('watch:server:run-tests', function () {
 
     plugins.refresh.changed();
   });
+});
+
+// Coffee task
+gulp.task('coffee', function() {
+  return gulp.src(defaultAssets.client.coffee)
+    .pipe(coffee({ bare: true }).on('error', gutil.log))
+    .pipe(gulp.dest('./modules'));
 });
 
 // CSS linting task

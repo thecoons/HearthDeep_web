@@ -1,0 +1,26 @@
+<section>
+  <div class="page-header">
+    <h1 ng-bind="vm.hearthlog.name"></h1>
+  </div>
+  <div class="pull-right"
+       ng-show="vm.hearthlog.isCurrentUserOwner">
+    <a class="btn btn-primary"
+       ui-sref="hearthlogs.edit({ hearthlogId: vm.hearthlog._id })">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="vm.hearthlog.created | date:'mediumDate'"></span>
+      by
+      <span ng-if="vm.hearthlog.user"
+            ng-bind="vm.hearthlog.user.displayName"></span>
+      <span ng-if="!vm.hearthlog.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" ng-bind="vm.hearthlog.content"></p>
+</section>
