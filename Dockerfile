@@ -62,14 +62,17 @@ WORKDIR /opt/mean.js
 # when the local package.json file changes.
 # Install npm packages
 COPY package.json /opt/mean.js/package.json
+
+COPY . /opt/mean.js
+
 RUN npm install --quiet && npm cache clean
+RUN npm install -g gulp-coffee
 
 # Install bower packages
 COPY bower.json /opt/mean.js/bower.json
 COPY .bowerrc /opt/mean.js/.bowerrc
 RUN bower install --quiet --allow-root --config.interactive=false
 
-COPY . /opt/mean.js
 
 # Run MEAN.JS server
 CMD ["npm", "start"]
