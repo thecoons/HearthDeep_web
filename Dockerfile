@@ -66,8 +66,6 @@ COPY package.json /opt/mean.js/package.json
 RUN npm install --quiet && npm cache clean
 COPY . /opt/mean.js
 
-RUN npm install -save-dev gulp-coffee
-
 # Install bower packages
 COPY bower.json /opt/mean.js/bower.json
 COPY .bowerrc /opt/mean.js/.bowerrc
